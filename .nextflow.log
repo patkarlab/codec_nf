@@ -1,0 +1,95 @@
+Feb-26 16:02:55.671 [main] DEBUG nextflow.cli.Launcher - $> nextflow -c /home/diagnostics/pipelines/codecPipeline/nextflow.config run codec_DEMUX.nf -entry CODEC -resume -bg
+Feb-26 16:02:55.843 [main] INFO  nextflow.cli.CmdRun - N E X T F L O W  ~  version 21.10.6
+Feb-26 16:02:55.866 [main] INFO  nextflow.cli.CmdRun - Launching `codec_DEMUX.nf` [mad_jennings] - revision: 8a6ffdea4e
+Feb-26 16:02:55.879 [main] DEBUG nextflow.config.ConfigBuilder - Found config local: /home/diagnostics/pipelines/codecPipeline/nextflow.config
+Feb-26 16:02:55.881 [main] DEBUG nextflow.config.ConfigBuilder - User config file: /home/diagnostics/pipelines/codecPipeline/nextflow.config
+Feb-26 16:02:55.882 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/diagnostics/pipelines/codecPipeline/nextflow.config
+Feb-26 16:02:55.882 [main] DEBUG nextflow.config.ConfigBuilder - Parsing config file: /home/diagnostics/pipelines/codecPipeline/nextflow.config
+Feb-26 16:02:55.900 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Feb-26 16:02:56.876 [main] DEBUG nextflow.config.ConfigBuilder - Applying config profile: `standard`
+Feb-26 16:02:56.910 [main] DEBUG nextflow.plugin.PluginsFacade - Setting up plugin manager > mode=prod; plugins-dir=/home/diagnostics/.nextflow/plugins
+Feb-26 16:02:56.912 [main] DEBUG nextflow.plugin.PluginsFacade - Plugins default=[]
+Feb-26 16:02:56.924 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Enabled plugins: []
+Feb-26 16:02:56.925 [main] INFO  org.pf4j.DefaultPluginStatusProvider - Disabled plugins: []
+Feb-26 16:02:56.929 [main] INFO  org.pf4j.DefaultPluginManager - PF4J version 3.4.1 in 'deployment' mode
+Feb-26 16:02:56.943 [main] INFO  org.pf4j.AbstractPluginManager - No plugins
+Feb-26 16:02:57.012 [main] DEBUG nextflow.Session - Session uuid: d3c63204-bdc2-4a8e-ba80-5eac69234a45
+Feb-26 16:02:57.012 [main] DEBUG nextflow.Session - Run name: mad_jennings
+Feb-26 16:02:57.012 [main] DEBUG nextflow.Session - Executor pool size: 156
+Feb-26 16:02:57.038 [main] DEBUG nextflow.cli.CmdRun - 
+  Version: 21.10.6 build 5660
+  Created: 21-12-2021 16:55 UTC (22:25 IDT)
+  System: Linux 5.4.0-167-generic
+  Runtime: Groovy 3.0.9 on OpenJDK 64-Bit Server VM 1.8.0_392-8u392-ga-1~20.04-b08
+  Encoding: UTF-8 (UTF-8)
+  Process: 1039529@jarvis [169.254.95.120]
+  CPUs: 156 - Mem: 755.5 GB (289.5 GB) - Swap: 264 GB (263.9 GB)
+Feb-26 16:02:57.069 [main] DEBUG nextflow.Session - Work-dir: /home/diagnostics/pipelines/codecPipeline/work [xfs]
+Feb-26 16:02:57.069 [main] DEBUG nextflow.Session - Script base path does not exist or is not a directory: /home/diagnostics/pipelines/codecPipeline/bin
+Feb-26 16:02:57.078 [main] DEBUG nextflow.executor.ExecutorFactory - Extension executors providers=[]
+Feb-26 16:02:57.087 [main] DEBUG nextflow.Session - Observer factory: DefaultObserverFactory
+Feb-26 16:02:57.142 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 157; maxThreads: 1000
+Feb-26 16:02:57.253 [main] DEBUG nextflow.Session - Session start invoked
+Feb-26 16:02:57.258 [main] DEBUG nextflow.trace.TraceFileObserver - Flow starting -- trace file: /home/diagnostics/pipelines/codecPipeline/Final_Output/pipeline_trace.txt
+Feb-26 16:02:58.222 [main] DEBUG nextflow.script.ScriptRunner - > Launching execution
+Feb-26 16:02:58.240 [main] INFO  nextflow.Nextflow - 
+STARTING PIPELINE
+=*=*=*=*=*=*=*=*=
+
+Sample list: /home/diagnostics/pipelines/codecPipeline/sample_sheet.csv
+Sequences in:/home/diagnostics/pipelines/codecPipeline/sequences/
+
+
+Feb-26 16:02:58.340 [main] DEBUG nextflow.util.CustomThreadPool - Creating default thread pool > poolSize: 157; maxThreads: 1000
+Feb-26 16:02:58.407 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.407 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.426 [main] DEBUG nextflow.executor.Executor - [warm up] executor > local
+Feb-26 16:02:58.445 [main] DEBUG n.processor.LocalPollingMonitor - Creating local task monitor for executor 'local' > cpus=25; memory=755.5 GB; capacity=156; pollInterval=100ms; dumpInterval=5m
+Feb-26 16:02:58.539 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.539 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.544 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.544 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.555 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.555 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.560 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.560 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.566 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.566 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.571 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.571 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.581 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.581 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.586 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.586 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.589 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.589 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.593 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.593 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.598 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.598 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.602 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.602 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.606 [main] DEBUG nextflow.executor.ExecutorFactory - << taskConfig executor: null
+Feb-26 16:02:58.606 [main] DEBUG nextflow.executor.ExecutorFactory - >> processorType: 'local'
+Feb-26 16:02:58.609 [main] DEBUG nextflow.Session - Workflow process names [dsl2]: CODEC:ZipperBamAlignment, CODEC:MergeAndSortMoleculeConsensusReads, CODEC:GroupReadByUMI, CODEC:CollectInsertSizeMetrics, CODEC:AlignMolecularConsensusReads, AlignMolecularConsensusReads, CODEC:FgbioCollapseReadFamilies, FgbioCollapseReadFamilies, trim, AlignRawTrimmed, CODEC:trim, CODEC:Call, MergeAndSortMoleculeConsensusReads, demux, MolConsReadsCall, Call, GroupReadByUMI, CODEC:ReplaceRawReadGroup, CODEC:AlignRawTrimmed, CODEC:MolConsReadsCall, CODEC:MarkRawDuplicates, CODEC:demux, CODEC:MergeSplit, MarkRawDuplicates, ZipperBamAlignment, CollectInsertSizeMetrics, MergeSplit, ReplaceRawReadGroup
+Feb-26 16:02:58.609 [main] DEBUG nextflow.Session - Ignite dataflow network (15)
+Feb-26 16:02:58.616 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:demux
+Feb-26 16:02:58.617 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:trim
+Feb-26 16:02:58.617 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:AlignRawTrimmed
+Feb-26 16:02:58.617 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:ZipperBamAlignment
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:MergeSplit
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:ReplaceRawReadGroup
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:MarkRawDuplicates
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:CollectInsertSizeMetrics
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:GroupReadByUMI
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:FgbioCollapseReadFamilies
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:AlignMolecularConsensusReads
+Feb-26 16:02:58.618 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:MergeAndSortMoleculeConsensusReads
+Feb-26 16:02:58.619 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:Call
+Feb-26 16:02:58.619 [main] DEBUG nextflow.processor.TaskProcessor - Starting process > CODEC:MolConsReadsCall
+Feb-26 16:02:58.619 [main] DEBUG nextflow.script.ScriptRunner - > Await termination 
+Feb-26 16:02:58.619 [main] DEBUG nextflow.Session - Session await
+Feb-26 16:02:58.884 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Feb-26 16:02:58.887 [Task submitter] INFO  nextflow.Session - [49/bd7d14] Submitted process > CODEC:demux (2)
+Feb-26 16:02:58.896 [Task submitter] DEBUG nextflow.executor.LocalTaskHandler - Launch cmd line: /bin/bash -ue .command.run
+Feb-26 16:02:58.896 [Task submitter] INFO  nextflow.Session - [26/3b75c2] Submitted process > CODEC:demux (1)

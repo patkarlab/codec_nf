@@ -1,0 +1,80 @@
+date : 8/8/2023
+---------------
+codec trim -1 demux_outprefix.Sample8.1.fastq.gz -2 demux_outprefix.Sample8.1.fastq.gz -o Sample8_trim_outprefix -u 3 -U 3 -f 2 -t 2 -s Sample8
+---------------------------------------------------------------------------------------------------------------------
+aligned.rawtrim
+
+samtools fastq Sample8_trim_outprefix.trim.bam | bwa mem -K 100000000 -t 20 -p -Y /home/reference_genomes/hg19_broad/hg19_all.fasta - > Sample8.sam
+--------------------------------------------------------------------------------------------------------------
+zipperbam
+
+/home/programs/fgbio/fgbio-2.0.1.jar --compression 0 --async-io ZipperBams -i Sample8.sam --unmapped Sample8_trim_outprefix.trim.bam --ref /home/reference_genomes/hg19_broad/hg19_all.fasta | samtools sort - -o Sample8.output.bam -O BAM -@ 20 && samtools index Sample8.output.bam -@ 20
+-------------------------------------------------------------------------------------------------
+MergeSplit
+samtools merge -@ 20 Sample8.MergeSplit.bam Sample8.output.bam && samtools index Sample8.MergeSplit.bam -@ 20
+-------------------------------------------------------------------------------------------------------------
+Sortbam
+
+samtools sort -n Sample8.MergeSplit.bam -o Sample8.raw.aligned.sortbyname.bam
+----------------------------------------------------------------------------
+replacerawraedgroup
+
+java -Xmx8g -jar /home/programs/picard/build/libs/picard.jar AddOrReplaceReadGroups I=Sample8.MergeSplit.bam O=Sample8.raw.replacerg.bam CREATE_INDEX=true RGID=4 RGLB=lib1 RGPL=ILLUMINA RGPU=unit1 RGSM=20
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ MarkRawDuplicates:
+
+java -Xmx8g -jar /home/programs/picard/build/libs/picard.jar UmiAwareMarkDuplicatesWithMateCigar I=Sample8.raw.replacerg.bam O=Sample8.raw.replacerg.markdup.bam M=Sample8.raw.marked_duplicates.txt UMI_METRICS=Sample8.raw.umi_metrics.txt CREATE_INDEX=true CLEAR_DT=false DUPLEX_UMI=true BARCODE_TAG=RX TAG_DUPLICATE_SET_MEMBERS=true TAGGING_POLICY=All PG=null
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CollectInsertSizeMetrics:
+
+java -Xmx8g -jar /home/programs/picard/build/libs/picard.jar CollectInsertSizeMetrics I=Sample8.raw.replacerg.bam O=Sample8.raw.insert_size_metrics.txt H=Sample6.raw.insert_size_histogram.pdf M=0.05 W=600 DEVIATIONS=100
+
+-H
+File to write insert size Histogram chart to.
+
+-M
+When generating the Histogram, discard any data categories (out of FR, TANDEM, RF) that have fewer than this percentage of overall reads. (Range: 0 to 1).
+
+-W
+Explicitly sets the Histogram width, overriding automatic truncation of Histogram tail. Also, when calculating mean and standard deviation, only bins <= Histogram_WIDTH will be included.
+Integer  null
+
+--DEVIATIONS / NA
+Generate mean, sd and plots by trimming the data down to MEDIAN + DEVIATIONS*MEDIAN_ABSOLUTE_DEVIATION. This is done because insert size data typically includes enough anomalous values from chimeras and other artifacts to make the mean and sd grossly misleading regarding the real distribution.
+double  10.0  [ [ -∞  ∞ ] ]
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+GroupReadByUMI
+
+/home/programs/fgbio/fgbio-2.0.1.jar --compression 1 --async-io GroupReadsByUmi -i Sample8.raw.replacerg.bam -o Sample8.GroupedByUmi.bam -f Sample8.umiHistogram.txt -m 0 --strategy=paired
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FgbioCollapseReadFamilies:
+
+/home/programs/fgbio/fgbio-2.0.1.jar --compression 1 CallMolecularConsensusReads -i Sample8.GroupedByUmi.bam -o Sample8.mol_consensus.bam  --threads 20 --consensus-call-overlapping-bases false -M 1
+
+-M 
+The minimum number of reads to produce a consensus base.
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ AlignMolecularConsensusReads:
+
+ samtools fastq Sample8.mol_consensus.bam | bwa mem -K 100000000 -t 20 -p -Y /home/reference_genomes/hg19_broad/hg19_all.fasta - > Sample8.mol_consensus.aligned.sam
+ -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ MergeAndSortMoleculeConsensusReads:
+
+/home/programs/fgbio/fgbio-2.0.1.jar --compression 0 --async-io ZipperBams -i Sample8.mol_consensus.aligned.sam --unmapped Sample8.mol_consensus.bam --ref /home/reference_genomes/hg19_broad/hg19_all.fasta --tags-to-reverse Consensus --tags-to-revcomp Consensus | samtools sort - -o Sample8.mol_consensus.aligned.bam -O BAM -@ 20 && samtools index Sample8.mol_consensus.aligned.bam -@ 20
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+codec call 
+codec call -b Sample8.raw.replacerg.markdup.bam -L Probes-XGEN_9857C1725CE84D37803C380036834C74_g_sortd.bed  -r /home/reference_genomes/hg19_broad/hg19_all.fasta  -p lenient -o SAMPLE8calloutput
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+hsmatrix
+
+java -Xmx8g -jar /home/programs/picard/build/libs/picard.jar CollectHsMetrics I=Sample6.mol_consensus.aligned.bam O=Sample6.hsmetrics.txt BAIT_INTERVALS= Probes-XGEN_9857C1725CE84D37803C380036834C74_g_sortd.interval_list TARGET_INTERVALS= Probes-XGEN_9857C1725CE84D37803C380036834C74_g_sortd.interval_list R=/home/reference_genomes/hg19_broad/hg19_all.fasta VALIDATION_STRINGENCY=LENIENT
+--------------------------------------------------------------------------------------------------------------------------
+java -jar /home/programs/picard/build/libs/picard.jar BedToIntervalList I=Probes-XGEN_9857C1725CE84D37803C380036834C74_g_sortd.bed O=list.interval_list SD=reference_sequence.dict
+
+/usr/lib/jvm/java-8-openjdk-amd64/bin//java -jar /home/programs/picard/build/libs/picard.jar BedToIntervalList \
+I=Probes-XGEN_9857C1725CE84D37803C380036834C74_g_sortd.bed \
+O=XGEN_9857C1725CE84D37803C380036834C74_g_sortd.interval_list \
+SD=/home/reference_genomes/hg19_broad/hg19_all.dict
+
+

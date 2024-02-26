@@ -1,0 +1,12 @@
+N E X T F L O W  ~  version 21.10.6
+Launching `codec_DEMUX.nf` [mad_jennings] - revision: 8a6ffdea4e
+
+STARTING PIPELINE
+=*=*=*=*=*=*=*=*=
+
+Sample list: /home/diagnostics/pipelines/codecPipeline/sample_sheet.csv
+Sequences in:/home/diagnostics/pipelines/codecPipeline/sequences/
+
+
+[49/bd7d14] Submitted process > CODEC:demux (2)
+[26/3b75c2] Submitted process > CODEC:demux (1)

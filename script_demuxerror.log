@@ -1,0 +1,52 @@
+N E X T F L O W  ~  version 21.10.6
+Launching `codec_DEMUX.nf` [hopeful_bhaskara] - revision: 3b3f93b6d6
+
+STARTING PIPELINE
+=*=*=*=*=*=*=*=*=
+
+Sample list: /home/diagnostics/CodecRun/codecPipeline/sample_sheet.csv
+Sequences in:/home/diagnostics/CodecRun/codecPipeline/sequences
+
+
+WARN: Output `set` must define at least two component -- Check process `CODEC:CollectInsertSizeMetrics`
+[d8/24f82d] Cached process > CODEC:demux (1)
+[37/ee0729] Cached process > CODEC:trim (1)
+[ed/65d158] Cached process > CODEC:AlignRawTrimmed (1)
+[57/7fc78b] Cached process > CODEC:MergeSplit (1)
+[fd/9d9610] Cached process > CODEC:ZipperBamAlignment (1)
+[29/5da812] Cached process > CODEC:ReplaceRawReadGroup (1)
+[41/a2e999] Cached process > CODEC:CollectInsertSizeMetrics (1)
+[4c/fa6b98] Cached process > CODEC:MarkRawDuplicates (1)
+[fc/5aa7d3] Submitted process > CODEC:GroupReadByUMI (1)
+Error executing process > 'CODEC:GroupReadByUMI (1)'
+
+Caused by:
+  Process `CODEC:GroupReadByUMI (1)` terminated with an error exit status (1)
+
+Command executed:
+
+  /home/programs/fgbio//fgbio-2.0.1.jar --compression 1 --async-io GroupReadsByUmi -i Sample8.marked.bam -o Sample8.GroupedByUmi.bam -f Sample8.umiHistogram.txt -m 0 --strategy=paired
+
+Command exit status:
+  1
+
+Command output:
+  (empty)
+
+Command error:
+  [2024/02/20 11:25:04 | FgBioMain | Info] Executing GroupReadsByUmi from fgbio version 2.0.1 as diagnostics@jarvis on JRE 11.0.21+9-post-Ubuntu-0ubuntu120.04 with snappy, IntelInflater, and IntelDeflater
+  [2024/02/20 11:25:04 | GroupReadsByUmi | Info] Filtering the input.
+  [2024/02/20 11:25:04 | GroupReadsByUmi | Info] Sorting the input to TemplateCoordinate order.
+  [2024/02/20 11:25:04 | FgBioMain | Fatal] ###########################################################################################
+  [2024/02/20 11:25:04 | FgBioMain | Fatal] Execution failed!
+  [2024/02/20 11:25:04 | FgBioMain | Fatal] Mate mapping quality (MQ) tag not present on read VL00151:135:AACTV3HM5:1:1401:29138:37084.
+  [2024/02/20 11:25:04 | FgBioMain | Fatal] ###########################################################################################
+  [2024/02/20 11:25:04 | FgBioMain | Info] GroupReadsByUmi failed. Elapsed time: 0.03 minutes.
+
+Work dir:
+  /home/diagnostics/CodecRun/codecPipeline/work/fc/5aa7d354cc81491077e0c6b44b5d5b
+
+Tip: you can try to figure out what's wrong by changing to the process work dir and showing the script file named `.command.sh`
+
+
+Oops .. something went wrong
