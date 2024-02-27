@@ -2,3 +2,5 @@ work/
 Coverview/
 sequences/
 Final_Output/
+.nextflow/
+.nextflow.log.*

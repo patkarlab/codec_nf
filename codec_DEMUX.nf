@@ -105,10 +105,10 @@ process CollectInsertSizeMetrics {
 	input:
 		tuple val (Sample), file(markdupbam), file(markdupbambai)
 	output:
-		tuple val (Sample), file ("*.txt"), file("*.insert_size_histogram.pdf")
+		tuple val (Sample), file ("*.txt"), file("*.pdf")
 	script:
 	"""
-	${params.java_path}java -Xmx8g -jar ${params.picard_path} CollectInsertSizeMetrics I=${markdupbam} O=${Sample}.InsertSizeMetrics.txt  H=${Sample}.insert_size_histogram.pdf M=0.5 W=600 DEVIATIONS=100
+	${params.java_path}java -Xmx8g -jar ${params.picard_path} CollectInsertSizeMetrics I=${markdupbam} O=${Sample}.InsertSizeMetrics.txt  H=${Sample}.insert_size_histogram.pdf  W=600 DEVIATIONS=100
 	sleep 1s
 	"""
 }
@@ -206,7 +206,7 @@ workflow CODEC {
 		MergeAndSortMoleculeConsensusReads(FgbioCollapseReadFamilies.out.join(AlignMolecularConsensusReads.out))
 		
 		Call(MarkRawDuplicates.out)
-		MolConsReadsCall(MergeAndSortMoleculeConsensusReads.out)
+		//MolConsReadsCall(MergeAndSortMoleculeConsensusReads.out)
 }
 workflow.onComplete {
 		log.info ( workflow.success ? "\n\nDone! Output in the 'Final_Output' directory \n" : "Oops .. something went wrong" )
