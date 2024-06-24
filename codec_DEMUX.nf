@@ -1,9 +1,6 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-"mkdir Coverview".execute()
-
-
 log.info """
 STARTING PIPELINE
 =*=*=*=*=*=*=*=*=
@@ -21,7 +18,7 @@ process demux{
 	script:
 	"""
 	${params.demux_sheet} ${Sample} ${IndexBarcode1} ${IndexBarcode2}
-	${params.codec} demux  -1 ${params.sequences}/*_S1_R1_001.fastq.gz  -2 ${params.sequences}/*_S1_R2_001.fastq.gz -p demux.csv -o demux_outprefix
+	${params.codec} demux  -1 ${params.sequences}/*_S0_L001_R1_001.fastq.gz  -2 ${params.sequences}/*_S0_L001_R1_001.fastq.gz -p demux.csv -o demux_outprefix
 	"""
 }
 
@@ -173,17 +170,19 @@ process Call {
 	sleep 1s
 	"""
 }
+
 process MolConsReadsCall {
+	publishDir "$PWD/Final_Output/${Sample}/", mode: 'copy', pattern: '*_collaps.variants_called.txt'
 	input:
 		tuple val (Sample), file(MolConsReadssortbam), file(MolConsReadssortbambai)
 	output:
-		tuple val (Sample), file ("*.variants_called.txt")
+		tuple val (Sample), file ("*_collaps.variants_called.txt")
 	script:
 	"""
-	${params.codec} call -b ${MolConsReadssortbam}  -L ${params.bedfile}  -r ${params.genome}  -p lenient -o ${Sample}
+	${params.codec} call -b ${MolConsReadssortbam}  -L ${params.bedfile}  -r ${params.genome}  -p lenient -o ${Sample}_collaps
 	"""
-
 }
+
 workflow CODEC {
 	Channel
 		.fromPath(params.input)
@@ -206,8 +205,9 @@ workflow CODEC {
 		MergeAndSortMoleculeConsensusReads(FgbioCollapseReadFamilies.out.join(AlignMolecularConsensusReads.out))
 		
 		Call(MarkRawDuplicates.out)
-		//MolConsReadsCall(MergeAndSortMoleculeConsensusReads.out)
+		MolConsReadsCall(MergeAndSortMoleculeConsensusReads.out)
 }
+
 workflow.onComplete {
 		log.info ( workflow.success ? "\n\nDone! Output in the 'Final_Output' directory \n" : "Oops .. something went wrong" )
 }
