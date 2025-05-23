@@ -4,3 +4,5 @@ sequences/
 Final_Output/
 .nextflow/
 .nextflow.log.*
+sample_sheet.csv
+*.log
