@@ -9,8 +9,8 @@ Sample list: ${params.input}
 Sequences in:${params.sequences}
 
 """
-process demux{
-	
+process demux {
+	publishDir "$PWD/Final_Output/${Sample}/", mode: 'copy'
 	input:
 		tuple val (Sample), val (IndexBarcode1), val (IndexBarcode2)
 	output:
@@ -18,7 +18,7 @@ process demux{
 	script:
 	"""
 	${params.demux_sheet} ${Sample} ${IndexBarcode1} ${IndexBarcode2}
-	${params.codec} demux  -1 ${params.sequences}/*_S0_L001_R1_001.fastq.gz  -2 ${params.sequences}/*_S0_L001_R1_001.fastq.gz -p demux.csv -o demux_outprefix
+	${params.codec} demux -1 ${params.sequences}/*_S1_R1_001.fastq.gz -2 ${params.sequences}/*_S1_R2_001.fastq.gz -p demux.csv -o demux_outprefix
 	"""
 }
 
@@ -166,7 +166,7 @@ process Call {
 		tuple val (Sample), file ("*.variants_called.txt")
 	script:
 	"""
-	${params.codec} call -b ${markdupbam}  -L ${params.bedfile}  -r ${params.genome}  -p lenient -o ${Sample}
+	${params.codec} call -b ${markdupbam} -L ${params.bedfile}.bed  -r ${params.genome}  -p lenient -o ${Sample}
 	sleep 1s
 	"""
 }
@@ -179,7 +179,7 @@ process MolConsReadsCall {
 		tuple val (Sample), file ("*_collaps.variants_called.txt")
 	script:
 	"""
-	${params.codec} call -b ${MolConsReadssortbam}  -L ${params.bedfile}  -r ${params.genome}  -p lenient -o ${Sample}_collaps
+	${params.codec} call -b ${MolConsReadssortbam}  -L ${params.bedfile}.bed  -r ${params.genome}  -p lenient -o ${Sample}_collaps
 	"""
 }
 
@@ -191,21 +191,21 @@ workflow CODEC {
 
 	main:
 		demux(Sample) 
-		trim (demux.out)
-		AlignRawTrimmed(trim.out)
-		ZipperBamAlignment(trim.out.join(AlignRawTrimmed.out))
-		MergeSplit(ZipperBamAlignment.out)
-		ReplaceRawReadGroup(MergeSplit.out)
-		MarkRawDuplicates(ReplaceRawReadGroup.out)
+		//trim (demux.out)
+		//AlignRawTrimmed(trim.out)
+		//ZipperBamAlignment(trim.out.join(AlignRawTrimmed.out))
+		//MergeSplit(ZipperBamAlignment.out)
+		//ReplaceRawReadGroup(MergeSplit.out)
+		//MarkRawDuplicates(ReplaceRawReadGroup.out)
 
-		CollectInsertSizeMetrics(MarkRawDuplicates.out)
-		GroupReadByUMI(MarkRawDuplicates.out)
-		FgbioCollapseReadFamilies(GroupReadByUMI.out)
-		AlignMolecularConsensusReads(FgbioCollapseReadFamilies.out)
-		MergeAndSortMoleculeConsensusReads(FgbioCollapseReadFamilies.out.join(AlignMolecularConsensusReads.out))
+		//CollectInsertSizeMetrics(MarkRawDuplicates.out)
+		//GroupReadByUMI(MarkRawDuplicates.out)
+		//FgbioCollapseReadFamilies(GroupReadByUMI.out)
+		//AlignMolecularConsensusReads(FgbioCollapseReadFamilies.out)
+		//MergeAndSortMoleculeConsensusReads(FgbioCollapseReadFamilies.out.join(AlignMolecularConsensusReads.out))
 		
-		Call(MarkRawDuplicates.out)
-		MolConsReadsCall(MergeAndSortMoleculeConsensusReads.out)
+		//Call(MarkRawDuplicates.out)
+		//MolConsReadsCall(MergeAndSortMoleculeConsensusReads.out)
 }
 
 workflow.onComplete {
